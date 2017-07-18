@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Teacher page</title>
+<link rel="stylesheet" type="text/css"
+	href="css/table.css">
+<script src="http://maps.googleapis.com/maps/api/js">
+</script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+</head>
+<body>
+	<div align="center">
+		<h3>Sensor Id:</h3>
+		<form>
+			<input type="label" value="KCAMILPI18" name="l1" id="l1" onfocus="if(this.value == 'KCAMILPI18') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'KCAMILPI18'; }"></input> <input type="button" id="calcBtn"
+				value="Get Data">
+		</form>
+	</div>
+	<table>
+		<thead>
+			<tr>
+				<th>Station Id</th>
+				<th>Observation Time</th>
+				<th>Sensor Location</th>
+				<th>Temprature</th>
+				<th>Wind Information</th>
+				<th>Visibility</th>
+				<th>Weather</th>
+				<th>Pressure Info</th>
+				<th>Icon</th>
+			</tr>
+		</thead>
+		<tbody id="sensorsList">
+		</tbody>
+	</table>
+	<br>
+	<br>
+	<div id="googleMap" style="width: 600px; height: 450px;"></div>
+</body>
+<script>
+	$(window).load(function() {
+		getTheData();
+	});
+	function getTheData() {
+		var sensor_id = $("#l1").val();
+		console.log(sensor_id);
+		var dataFromAPI = httpGet("http://api.wunderground.com/api/91e0c260e0e5b86c/conditions/q/pws:" + "KCASANJO405" + ".json")
+
+    	function httpGet(theUrl) {
+        	var xmlHttp = new XMLHttpRequest();
+        	xmlHttp.open("GET", theUrl, false); // false for synchronous request
+        	xmlHttp.send(null);
+        	return xmlHttp.responseText;
+    	}
+    	json_object = JSON.parse(dataFromAPI)
+    	console.log(json_object)
+
+			var i;
+			
+					//out += '<a href="' + arr[i].url + '">' + 
+					//arr[i].display + '</a><br>';
+			newTag = document.createElement('tr');
+			inStationId = "<td><strong>" + json_object.current_observation.station_id
+					+ "</strong></td>";
+			inObservationTime = "<td>" + json_object.current_observation.observation_time + "</td>";
+			inSensorLocation = "<td>" + json_object.current_observation.observation_location.full + "</td>";
+			inTemprature = "<td>" + json_object.current_observation.temperature_string + "</td>";
+			inWindInfo = "<td>" + json_object.current_observation.wind_string + "</td>";
+			inVisibility = "<td>" + json_object.current_observation.visibility_mi + "</td>";
+			inWeather = "<td>" + json_object.current_observation.weather + "</td>";
+			inPressureInfo = "<td>" + json_object.current_observation.pressure_mb + "</td>";
+			inIcon = "<td><img src=\""+json_object.current_observation.icon_url+"\" alt=\""+json_object.current_observation.icon+"\" height=\"42\" width=\"42\"></td>";
+			inText = inStationId + inObservationTime + inSensorLocation
+					+ inTemprature + inWindInfo + inVisibility + inWeather
+					+ inPressureInfo + inIcon;
+			//console.log(inText);
+			newTag.innerHTML = inText;
+			var tableList = document.getElementById("sensorsList")
+			tableList.replaceChild(newTag,tableList.childNodes[0]);
+};
+</script>
+<script>
+	$('#calcBtn').click(function() {
+		callServlet();
+	});
+
+	function callServlet() {
+		var sensor_id = $("#l1").val();
+		console.log(sensor_id);
+		var dataFromAPI = httpGet("http://api.wunderground.com/api/91e0c260e0e5b86c/conditions/q/pws:" + sensor_id + ".json")
+
+    	function httpGet(theUrl) {
+        	var xmlHttp = new XMLHttpRequest();
+        	xmlHttp.open("GET", theUrl, false); // false for synchronous request
+        	xmlHttp.send(null);
+        	return xmlHttp.responseText;
+    	}
+    	json_object = JSON.parse(dataFromAPI)
+    	console.log(json_object)
+
+			var i;
+			
+					//out += '<a href="' + arr[i].url + '">' + 
+					//arr[i].display + '</a><br>';
+					newTag = document.createElement('tr');
+					inStationId = "<td><strong>" + json_object.current_observation.station_id
+							+ "</strong></td>";
+					inObservationTime = "<td>" + json_object.current_observation.observation_time + "</td>";
+					inSensorLocation = "<td>" + json_object.current_observation.observation_location.full + "</td>";
+					inTemprature = "<td>" + json_object.current_observation.temperature_string + "</td>";
+					inWindInfo = "<td>" + json_object.current_observation.wind_string + "</td>";
+					inVisibility = "<td>" + json_object.current_observation.visibility_mi + "</td>";
+					inWeather = "<td>" + json_object.current_observation.weather + "</td>";
+					inPressureInfo = "<td>" + json_object.current_observation.pressure_mb + "</td>";
+					inIcon = "<td><img src=\""+json_object.current_observation.icon_url+"\" alt=\""+json_object.current_observation.icon+"\" height=\"42\" width=\"42\"></td>";
+					inText = inStationId + inObservationTime + inSensorLocation
+							+ inTemprature + inWindInfo + inVisibility + inWeather
+							+ inPressureInfo + inIcon;
+					//console.log(inText);
+					newTag.innerHTML = inText;
+					var tableList = document.getElementById("sensorsList")
+					tableList.replaceChild(newTag,tableList.childNodes[0]);
+
+			};
+</script>
+</html>

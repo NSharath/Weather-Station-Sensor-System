@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/MobileSensorCloud/css/table.css">
+<script
+		src="http://maps.googleapis.com/maps/api/js">
+</script>
+
+</head>
+<body>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Location</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody id="sensorsList">
+  </tbody>
+</table>
+<br>
+<br>
+<div id="googleMap" style="width:600px;height:450px;"></div>
+</body>
+<script type="text/javascript">
+	window.onload = function() {
+		var xmlhttp = new XMLHttpRequest();
+		//var url = "http://localhost:8080/MobileSensorCloud/sensor/data/geolookup/city/CA/San_Jose";
+		var url = "http://localhost:8080/MobileSensorCloud/sensor/data/userSensors";
+		xmlhttp.onreadystatechange = function() {
+		    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+		        var arr = JSON.parse(xmlhttp.responseText);
+		        console.log(arr);
+		        //console.log(arr.nearby_weather_stations.pws.station.length)
+		    
+		        //myFunction(arr.nearby_weather_stations.pws.station);
+		        
+		        var i;
+		    	var markers = new Array();
+		    	for(i = 0; i < arr.sensors.length; i++) {
+		    		//out += '<a href="' + arr[i].url + '">' + 
+		    		//arr[i].display + '</a><br>';
+		    		newTag = document.createElement('tr');
+		    		newTag.setAttribute('id', arr.sensors[i].name);
+		    		
+	        		inTextName = "<td><strong>"+arr.sensors[i].name + "</strong></td>";
+	        		inTextType = "<td>"+arr.sensors[i].type + "</td>";
+	        		inTextLocation = "<td>"+arr.sensors[i].location + "</td>";
+	        		inTextStatus = "<td>"+arr.sensors[i].status + "</td>";
+	        		inText = inTextName + inTextType + inTextLocation + inTextStatus;
+	        		//console.log(inText);
+					newTag.innerHTML = inText;
+					document.getElementById("sensorsList").appendChild(newTag);
+					
+					var station = new Array();
+		    		station.push(arr.sensors[i].name);
+		    		station.push(arr.sensors[i].lat);
+		    		station.push(arr.sensors[i].lon);
+		    		console.log(station);
+		    		markers.push(station);
+					
+		    		/* var station = new Array();
+		    		station.push(arr[i].id);
+		    		station.push(arr[i].lat);
+		    		station.push(arr[i].lon);
+		    		console.log(station);
+		    		markers.push(station); */
+		    		
+		    	}
+
+		    	for(i = 0; i < arr.length; i++) {
+		    		//out += '<a href="' + arr[i].url + '">' + 
+		    		//arr[i].display + '</a><br>';
+		    		var station = new Array();
+		    		station.push(arr[i].id);
+		    		station.push(arr[i].lat);
+		    		station.push(arr[i].lon);
+		    		console.log(station);
+		    		markers.push(station);
+		    		
+		    	}
+		    	//return markers
+		    	console.log(markers)
+		    	//document.getElementById("id01").innerHTML = out;
+		    	var latlng = new google.maps.LatLng(37.3382, -121.8863);
+		    	var bounds = new google.maps.LatLngBounds();
+		        var myOptions = {
+		            zoom: 12,
+		            center: latlng,
+		            mapTypeId: google.maps.MapTypeId.ROADMAP,
+		            mapTypeControl: false
+		        };
+		        var map = new google.maps.Map(document.getElementById("googleMap"),myOptions);
+		        var infowindow = new google.maps.InfoWindow(), marker, i;
+		        for (i = 0; i < markers.length; i++) {  
+		            marker = new google.maps.Marker({
+		                position: new google.maps.LatLng(markers[i][1], markers[i][2]),
+		                map: map
+		            });
+		            bounds.extend(marker.position);
+		            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+		                return function() {
+		                    infowindow.setContent(markers[i][0]);
+		                    infowindow.open(map, marker);
+		                    //document.getElementById("lat").value = markers[i][1];
+		                    //document.getElementById("lon").value = markers[i][2];
+		                    //document.getElementById("station_id").value = markers[i][0];
+		                }
+		            })(marker, i));
+		        }
+		        map.fitBounds(bounds);
+		        //return myArr;
+		    }
+		};
+		xmlhttp.open("GET", url, true);
+		xmlhttp.send();
+	};
+</script>
+</html>

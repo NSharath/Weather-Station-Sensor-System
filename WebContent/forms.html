@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weather Buddy - Add Sensor Form</title>
+
+<link href="/MobileSensorCloudEngine/css/bootstrap.min.css" rel="stylesheet">
+<link href="/MobileSensorCloudEngine/css/datepicker3.css" rel="stylesheet">
+<link href="/MobileSensorCloudEngine/css/styles.css" rel="stylesheet">
+
+<!--Icons-->
+<script src="js/lumino.glyphs.js"></script>
+ <script
+	src="http://maps.googleapis.com/maps/api/js">
+</script>
+<script
+	src="/MobileSensorCloudEngine/googlemap.js">
+</script>
+
+<!--[if lt IE 9]>
+<script src="js/html5shiv.js"></script>
+<script src="js/respond.min.js"></script>
+<![endif]-->
+<style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    <style>
+      #locationField, #controls {
+        position: relative;
+        width: 480px;
+      }
+      #autocomplete {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 99%;
+      }
+      .label {
+        text-align: right;
+        font-weight: bold;
+        width: 100px;
+        color: #303030;
+      }
+      #address {
+        border: 1px solid #000090;
+        background-color: #f0f0ff;
+        width: 480px;
+        padding-right: 2px;
+      }
+      #address td {
+        font-size: 10pt;
+      }
+      .field {
+        width: 99%;
+      }
+      .slimField {
+        width: 80px;
+      }
+      .wideField {
+        width: 200px;
+      }
+      #locationField {
+        height: 20px;
+        margin-bottom: 2px;
+      }
+</style>
+
+
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><span>Weather</span> Buddy</a>
+				<ul class="user-menu">
+					<li class="dropdown pull-right">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> User <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="/MobileSensorCloudEngine/login.html"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+							
+		</div><!-- /.container-fluid -->
+	</nav>
+		
+	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+		<form role="search">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Search">
+			</div>
+		</form>
+		<ul class="nav menu">
+			<li><a href="index.html"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
+			<li><a href="charts.html"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Past 24 Hours</a></li>
+			<li><a href="other-charts.html"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Day History</a></li>
+			<li class="active"><a href="forms.html"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg> Add Sensor</a></li>
+			<li><a href="add_hub.html"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg> Add Hub</a></li>
+			<li><a href="tables.html"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Sensor Table</a></li>
+			<li><a href="hub-table.html"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Hub Table</a></li>
+			<li role="presentation" class="divider"></li>
+			<li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
+		</ul>
+
+	</div><!--/.sidebar-->
+	
+		
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+				<li class="active">Icons</li>
+			</ol>
+		</div><!--/.row-->
+		
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">Add Sensor</h1>
+			</div>
+		</div><!--/.row-->
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+				
+					<div class="panel-heading">Please Choose a City where you want to find for sensors:</div>
+					<div class="panel-body">
+						<div class="col-md-9">					
+      						<input class="form-control" id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" type="text"></input>
+      						<form role="form" onsubmit="return codeAddress()">
+       							<input type="button" value="Submit" onclick="reloadMaps();" ></input>
+      						</form>
+    						<br>
+    						<button type="submit" class="btn btn-default" onclick="reloadCityMaps();">Get Sensors</button>
+						</div>
+				</div>
+			</div><!-- /.col-->
+		</div><!-- /.row -->
+		
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+				
+					<div class="panel-heading">Sensor Details</div>
+					<div class="panel-body">
+					
+						<div class="col-md-6">
+						
+							<form role="form">
+							
+								<div class="form-group">
+									<label>Sensor Name</label>
+									<input class="form-control" placeholder="" id="sensor_name">
+								</div>
+																
+								<div class="form-group">
+									<label>Sensor ID</label>
+									<input class="form-control" id="station_id">
+								</div>
+							
+								<div class="form-group">
+									<label>State</label>
+									<input class="form-control" id="administrative_area_level_1">
+								</div>							
+								
+								<div class="form-group">
+									<label>City</label>
+									<input class="form-control" id="locality">
+								</div>
+								
+								<div class="form-group">
+									<label>Zip Code</label>
+									<input class="form-control" id="postal_code">
+								</div>
+								<div class="form-group">
+									<label>Latitude</label>
+									<input class="form-control" id="lat">
+								</div>
+								<div class="form-group">
+									<label>Longitude</label>
+									<input class="form-control" id="lon">
+								</div>
+								<div class="form-group">
+									<label>Country</label>
+									<input class="form-control" id="country">
+								</div>
+								
+								<div class="form-group">
+									<label>Description of Sensor</label>
+									<textarea class="form-control" rows="3" id="desc"></textarea>
+								</div>
+								<div class="form-group">
+									<label>Hub </label>
+									<select class="form-control" id="hub_list">
+										<option>No hub</option>
+									</select>
+								</div>
+								<input type="button" id="submit" value="Submit" class="btn btn-primary">
+								<button type="reset" class="btn btn-default">Reset Button</button>
+
+							</div>
+							<div class="col-md-6">
+								<div id="googleMap" style="width:550px;height:450px;"></div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div><!-- /.col-->
+		</div><!-- /.row -->
+		
+	</div><!--/.main-->
+	<script src="/MobileSensorCloudEngine/js/jquery-1.11.1.min.js"></script>
+	<script src="/MobileSensorCloudEngine/js/bootstrap.min.js"></script>
+	<script src="/MobileSensorCloudEngine/js/chart.min.js"></script>
+	<script src="/MobileSensorCloudEngine/js/chart-data.js"></script>
+	<script src="/MobileSensorCloudEngine/js/easypiechart.js"></script>
+	<script src="/MobileSensorCloudEngine/js/easypiechart-data.js"></script>
+	<script src="/MobileSensorCloudEngine/js/bootstrap-datepicker.js"></script>
+	<script>
+		!function ($) {
+			$(document).on("click","ul.nav li.parent > a > span.icon", function(){		  
+				$(this).find('em:first').toggleClass("glyphicon-minus");	  
+			}); 
+			$(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+		}(window.jQuery);
+
+		$(window).on('resize', function () {
+		  if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+		})
+		$(window).on('resize', function () {
+		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+		})
+	</script>	
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1slKomfoxXderu0SI_WK8DbfEAAcVZTU&libraries=places&callback=initAutocomplete"
+        async defer></script>
+        
+    <script>
+	$(window).load(function() {
+		getTheData();
+	});
+	function removeElement(keys, el){
+		var i = keys.indexOf(el);
+		if(i != -1) {
+			keys.splice(i, 1);
+		}
+		return keys;
+	}
+	function getTheData() {
+		var xmlhttp = new XMLHttpRequest();
+		var username = readCookie("user");
+		var url = "/MobileSensorCloudEngine/api/hub/"+username;
+		//var url = "http://ec2-54-191-40-122.us-west-2.compute.amazonaws.com:8080/AutomaticClassAttendanceSystem/sensor/class/section/devices";
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				var arr = JSON.parse(xmlhttp.responseText);
+				var keys = [];
+				for(var k in arr) keys.push(k);
+				//console.log(keys);
+				keys = removeElement(keys, "_id");
+				keys = removeElement(keys, "username");
+				//console.log(keys);
+				var i;
+				var markers = new Array();
+				for (i = 0; i < keys.length; i++) {
+					newTag = document.createElement('option');
+					newTag.innerHTML = keys[i];
+					document.getElementById("hub_list").appendChild(newTag);
+				} 
+			}
+		};
+		xmlhttp.open("GET", url, true);
+		xmlhttp.send();
+	};
+	</script>
+	<script>
+	//var host = "ec2-54-187-140-163.us-west-2.compute.amazonaws.com:8080";
+	$(function () {	
+	function callPostSensorServlet() {
+		var sensor_name = $("#sensor_name").val();
+		var station_id = $("#station_id").val();
+		var state = $("#administrative_area_level_1").val();
+		var city = $("#locality").val();
+		var zip = $("#postal_code").val();
+		var lat = $("#lat").val();
+		var lon = $("#lon").val();
+		var country = $("#country").val();
+		var description = $("#desc").val();
+		var hub_id = $("#hub_list option:selected" ).text();
+		//console.log(hub_id);
+		var username = readCookie("user");
+		//console.log(readCookie("user"));
+		var sensor_key = username + '_' + station_id;
+		
+        var myData = {
+                "username": username,
+                "name": sensor_name,
+                "sensor_id": station_id,
+                "sensor_key": sensor_key,
+                "state": state,
+                "city": city,
+                "zip": zip,
+                "latitude": lat,
+                "longitude": lon,
+                "country": country,
+				"description": description,
+                "status": false,
+                "hub": hub_id
+        };
+        //console.log(myData);
+        //var url_post = 'http://' + host + '/AutomaticClassAttendanceSystem/sensor/class/student/' + sid;
+        //var url_post = 'http://' + host + '/MobileSensorCloudEngine/api/sensor/jsantos7/KCASANJO177';
+        var url_post = '/MobileSensorCloudEngine/api/sensor/'+ username + '/' + station_id;//'jsantos7/KCASANFRAN177';
+        var url_put_hub = '/MobileSensorCloudEngine/api/hub/'+username+ '/' + hub_id +'/add_sensor/' + station_id;
+        //console.log(url_post);
+        $.ajax({
+            type: "POST",
+            url: url_post, 
+            contentType : 'application/json; charset=utf-8',
+            data: {
+                jsonData: JSON.stringify(myData) // this works but mocky.io doesn't support it
+            },
+            dataType: "text",
+
+            //if received a response from the server
+            complete: function(xhr, statusText) {
+            	//alert("inside put");
+            	//alert(xhr.status); 
+				if(xhr.status != 201){
+					//alert(xhr.status); 
+					console.log("Couldn't update."); 
+					//show_error();
+				}else{
+					//alert(xhr.status);
+					callPutSensorHubServlet(url_put_hub);
+					location.href = "/MobileSensorCloudEngine/index.html";
+				} 
+		    } 
+        });
+    }
+	
+	function callPutSensorHubServlet(url) {
+        //console.log(url);
+        $.ajax({
+            type: "PUT",
+            url: url,  //"/AjaxServletCalculator",
+            contentType : 'application/json; charset=utf-8',
+            dataType: "text",
+
+            //if received a response from the server
+            complete: function(xhr, statusText) {
+            	//alert("inside put");
+            	//alert(xhr.status); 
+				if(xhr.status != 201){
+					//alert(xhr.status); 
+					console.log("Couldn't update."); 
+					//show_error();
+				}else{
+					//alert(xhr.status); 
+					location.href = "/MobileSensorCloudEngine/index.html";
+				} 
+		    } 
+        });
+    }
+    
+    $('#submit').click(function() {
+    	callPostSensorServlet();
+    });
+    
+});
+</script>
+</body>
+
+</html>

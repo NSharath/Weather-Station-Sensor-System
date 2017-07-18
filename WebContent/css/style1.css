@@ -1,0 +1,209 @@
+/* =============================================================================
+   Responsive Table CSS
+   ========================================================================== */
+   
+.dataTable {
+  display: block;
+  width: 100%;
+  margin: 1em 0;
+}
+
+.dataTable thead, .dataTable tbody, .dataTable thead tr, .dataTable th {
+  display: block;
+}
+
+.button_green{
+	
+	-moz-box-shadow: 7px 12px 12px -5px #3e7327;
+	-webkit-box-shadow: 7px 12px 12px -5px #3e7327;
+	box-shadow: 7px 12px 12px -5px #3e7327;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #77b55a), color-stop(1, #72b352));
+	background:-moz-linear-gradient(top, #77b55a 5%, #72b352 100%);
+	background:-webkit-linear-gradient(top, #77b55a 5%, #72b352 100%);
+	background:-o-linear-gradient(top, #77b55a 5%, #72b352 100%);
+	background:-ms-linear-gradient(top, #77b55a 5%, #72b352 100%);
+	background:linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77b55a', endColorstr='#72b352',GradientType=0);
+	background-color:#77b55a;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	border:2px solid #4b8f29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	font-weight:bold;
+	padding:4px 15px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #5b8a3c;
+}
+.button_green:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #72b352), color-stop(1, #77b55a));
+	background:-moz-linear-gradient(top, #72b352 5%, #77b55a 100%);
+	background:-webkit-linear-gradient(top, #72b352 5%, #77b55a 100%);
+	background:-o-linear-gradient(top, #72b352 5%, #77b55a 100%);
+	background:-ms-linear-gradient(top, #72b352 5%, #77b55a 100%);
+	background:linear-gradient(to bottom, #72b352 5%, #77b55a 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#72b352', endColorstr='#77b55a',GradientType=0);
+	background-color:#72b352;
+}
+.button_green:active {
+	position:relative;
+	top:1px;
+}
+
+.button_orange{
+	
+	-moz-box-shadow: 7px 12px 12px -5px #e0bd10;
+	-webkit-box-shadow: 7px 12px 12px -5px #e0bd10;
+	box-shadow: 7px 12px 12px -5px #e0bd10;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f0c908), color-stop(1, #f5d711));
+	background:-moz-linear-gradient(top, #f0c908 5%, #f5d711 100%);
+	background:-webkit-linear-gradient(top, #f0c908 5%, #f5d711 100%);
+	background:-o-linear-gradient(top, #f0c908 5%, #f5d711 100%);
+	background:-ms-linear-gradient(top, #f0c908 5%, #f5d711 100%);
+	background:linear-gradient(to bottom, #f0c908 5%, #f5d711 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f0c908', endColorstr='#f5d711',GradientType=0);
+	background-color:#f0c908;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	border:2px solid #cc9814;
+	display:inline-block;
+	cursor:pointer;
+	color:#000000;
+	font-family:Arial;
+	font-size:13px;
+	font-weight:bold;
+	padding:4px 15px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #d9d927;
+}
+.button_orange:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f5d711), color-stop(1, #f0c908));
+	background:-moz-linear-gradient(top, #f5d711 5%, #f0c908 100%);
+	background:-webkit-linear-gradient(top, #f5d711 5%, #f0c908 100%);
+	background:-o-linear-gradient(top, #f5d711 5%, #f0c908 100%);
+	background:-ms-linear-gradient(top, #f5d711 5%, #f0c908 100%);
+	background:linear-gradient(to bottom, #f5d711 5%, #f0c908 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5d711', endColorstr='#f0c908',GradientType=0);
+	background-color:#f5d711;
+}
+.button_orange:active {
+	position:relative;
+	top:1px;
+}
+
+.button_red{
+	
+	
+	-moz-box-shadow: 7px 12px 12px -5px #de1111;
+	-webkit-box-shadow: 7px 12px 12px -5px #de1111;
+	box-shadow: 7px 12px 12px -5px #de1111;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f00909), color-stop(1, #f51111));
+	background:-moz-linear-gradient(top, #f00909 5%, #f51111 100%);
+	background:-webkit-linear-gradient(top, #f00909 5%, #f51111 100%);
+	background:-o-linear-gradient(top, #f00909 5%, #f51111 100%);
+	background:-ms-linear-gradient(top, #f00909 5%, #f51111 100%);
+	background:linear-gradient(to bottom, #f00909 5%, #f51111 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f00909', endColorstr='#f51111',GradientType=0);
+	background-color:#f00909;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	border:2px solid #cc1414;
+	display:inline-block;
+	cursor:pointer;
+	color:#000000;
+	font-family:Arial;
+	font-size:13px;
+	font-weight:bold;
+	padding:4px 15px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #d92727;
+}
+.button_red:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f51111), color-stop(1, #f00909));
+	background:-moz-linear-gradient(top, #f51111 5%, #f00909 100%);
+	background:-webkit-linear-gradient(top, #f51111 5%, #f00909 100%);
+	background:-o-linear-gradient(top, #f51111 5%, #f00909 100%);
+	background:-ms-linear-gradient(top, #f51111 5%, #f00909 100%);
+	background:linear-gradient(to bottom, #f51111 5%, #f00909 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f51111', endColorstr='#f00909',GradientType=0);
+	background-color:#f51111;
+}
+.button_red:active {
+	position:relative;
+	top:1px;
+}
+
+
+
+
+.dataTable thead {
+  float: left;
+}
+
+.dataTable tbody {
+  width: auto;
+  position: relative;
+  overflow-x: auto;
+}
+
+.dataTable td, .dataTable th {
+  padding: .625em;
+  line-height: 1.5em;
+  border-bottom: 1px dashed #ccc;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.dataTable th {
+  text-align: left;
+  background: rgba(0, 0, 0, 0.14);
+  border-bottom: 1px dashed #aaa;
+}
+
+.dataTable tbody tr {
+  display: table-cell;
+}
+
+.dataTable tbody td {
+  display: block;
+}
+
+.dataTable tr:nth-child(odd) {
+	background: rgba(0, 0, 0, 0.07);
+}
+
+@media screen and (min-width: 50em) {
+
+  .dataTable {
+    display: table;
+  }
+  
+  .dataTable thead {
+    display: table-header-group;
+    float: none;
+  }
+  
+  .dataTable tbody {
+    display: table-row-group;
+  }
+  
+  .dataTable thead tr, .dataTable tbody tr {
+    display: table-row;
+  }
+  
+  .dataTable th, .dataTable tbody td {
+    display: table-cell;
+  }
+  
+  .dataTable td, .dataTable th {
+    width: auto;
+  }
+  
+}

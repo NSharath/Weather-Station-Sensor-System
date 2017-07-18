@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forms</title>
+
+<link href="/MobileSensorCloudEngine/css/bootstrap.min.css" rel="stylesheet">
+<link href="/MobileSensorCloudEngine/css/datepicker3.css" rel="stylesheet">
+<link href="/MobileSensorCloudEngine/css/styles.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+<script src="js/html5shiv.js"></script>
+<script src="js/respond.min.js"></script>
+<![endif]-->
+
+<script
+	src="/MobileSensorCloudEngine/googlemap.js">
+</script>
+</head>
+<script type="text/javascript">
+function show_error() {
+	var user = document.getElementById("no_error");
+	var err = document.getElementById("has_error");
+	user.style.display = 'none';
+	err.style.display = 'block';
+}
+function remove_error() {
+	var user = document.getElementById("no_error");
+	var err = document.getElementById("has_error");
+	user.style.display = 'block';
+	err.style.display = 'none';
+}
+</script>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><span>Weather</span>  Buddy</a>
+				<ul class="user-menu">
+					<li class="dropdown pull-right">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> User <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="/MobileSensorCloudEngine/login.html"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+							
+		</div><!-- /.container-fluid -->
+	</nav>
+	<br><br>
+	
+	<div class="row">
+		<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+			<div class="login-panel panel panel-default">
+				<div class="panel-heading">Sign Up</div>
+				<div class="panel-body">
+					<form role="form" id="html5Form">
+						<fieldset>
+							<div class="form-group">
+								<input class="form-control" placeholder="First" name="first" id="first" type="first" autofocus="">
+							</div>
+							<div class="form-group">
+								<input class="form-control" placeholder="Last" name="last" id="last" type="last" value="">
+							</div>
+							<div class="form-group" id="no_error" style="display: block;">
+								<input class="form-control" placeholder="Username" name="username" id="username" type="username" value="">
+							</div>
+							<div class="form-group has-error" id="has_error" style="display: none;">
+								<input class="form-control" placeholder="Username" name="username" id="username" type="username" value="">
+								<span class="help-block" id="error_user">User Already Exist.</span>
+							</div>
+							<div class="form-group">
+								<input class="form-control" placeholder="Password" name="password" id="password" type="password" value="">
+							</div>
+							<div class="form-group">
+								<input class="form-control" placeholder="E-mail" name="email" id="email" type="email" autofocus="">
+							</div>
+							<input type="button" id="sign_up" value="Sign Up" class="btn btn-primary">
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div><!-- /.col-->
+	</div><!-- /.row -->	
+	
+	<script src="/MobileSensorCloudEngine/js/jquery-1.11.1.min.js"></script>
+	<script src="/MobileSensorCloudEngine/js/bootstrap.min.js"></script>
+	<script src="/MobileSensorCloudEngine/js/chart.min.js"></script>
+	<script src="/MobileSensorCloudEngine/js/chart-data.js"></script>
+	<script src="/MobileSensorCloudEngine/js/easypiechart.js"></script>
+	<script src="/MobileSensorCloudEngine/js/easypiechart-data.js"></script>
+	<script src="/MobileSensorCloudEngine/js/bootstrap-datepicker.js"></script>
+	<script>
+	
+		!function ($) {
+			$(document).on("click","ul.nav li.parent > a > span.icon", function(){		  
+				$(this).find('em:first').toggleClass("glyphicon-minus");	  
+			}); 
+			$(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+		}(window.jQuery);
+
+		$(window).on('resize', function () {
+		  if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+		})
+		$(window).on('resize', function () {
+		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+		})
+	</script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script>
+		$(function() {
+			var host = "http://localhost:8080";
+			function callServlet() {
+				remove_error();
+				var first = $("#first").val(); //document.getElementById('number1').value;
+				var last = $("#last").val(); //document.getElementById('number2').value;
+				var username = $("#username").val();
+				var password = $("#password").val();
+				var email = $("#email").val();
+				var myData = {
+					"first" : first,
+					"last" : last,
+					"password" : password,
+					"email" : email,
+					"username" : username
+				};
+				console.log(myData);
+				/* //var url_post = 'http://ec2-54-191-40-122.us-west-2.compute.amazonaws.com:8080/AutomaticClassAttendanceSystem/sensor/class/student/register/'
+						+ sid; */
+				var url_post = host +'/MobileSensorCloudEngine/api/user/' + username;
+				console.log(url_post);
+				$.ajax({
+					type : "POST",
+					url : url_post, //"/AjaxServletCalculator",
+					cache: false,
+					contentType : 'application/json; charset=utf-8',
+					data : {
+						jsonData : JSON.stringify(myData)
+					// this works but mocky.io doesn't support it
+					},
+					dataType : "text",
+
+					/* //if received a response from the server
+					error: function(xhr, status, error) {
+      					// check status && error
+						alert("User Already Error Exist!"); 
+  					}, */
+					complete: function(xhr, statusText) {
+						if(xhr.status == 200){
+							//alert(xhr.status); 
+							alert("User Already Exist!"); 
+							show_error();
+						}else{
+							//alert(statusText); 
+							createCookie("user",username,7);
+							location.href = "/MobileSensorCloudEngine/index.html"
+						} 
+				    } 
+				});
+			}
+
+			$('#sign_up').click(function() {
+				callServlet();
+			});
+
+		});
+	</script>	
+</body>
+
+</html>
