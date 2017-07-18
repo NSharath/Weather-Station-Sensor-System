@@ -1,0 +1,2 @@
+This is a weather sensor web application which is built using Javascript. The weatherunderground API is used for retrieving the weather information. This Informaiton is updated
+to the user depending on the request made by the user.
